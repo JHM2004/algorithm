@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+
+void quick_sort(std::vector<int>& arr, int left, int right) {
+    if (left >= right) {
+        return; // 如果待排序范围左边界大于等于右边界，直接返回
+    }
+
+    int pivot = arr[left]; // 以左边界作为基准值
+    int i = left, j = right;
+
+    while (i < j) {
+        // 从右往左找到第一个小于等于 pivot 的数
+        while (i < j && arr[j] > pivot) {
+            j--;
+        }
+
+        // 从左往右找到第一个大于 pivot 的数
+        while (i < j && arr[i] <= pivot) {
+            i++;
+        }
+
+        // 如果 i 和 j 还没有相遇，交换两个数
+        if (i < j) {
+            std::swap(arr[i], arr[j]);
+        }
+    }
+
+    // 交换基准值和 i/j 相遇位置的数
+    std::swap(arr[left], arr[i]);
+
+    // 递归处理左右两个子区间
+    quick_sort(arr, left, i - 1);
+    quick_sort(arr, i + 1, right);
+}
+
+int main() {
+    std::vector<int> arr = {3, 1, 2, 6, 4, 5, 8, 7};
+    quick_sort(arr, 0, arr.size() - 1);
+
+    for (int i = 0; i < arr.size(); i++) {
+        std::cout << arr[i] << " ";
+    }
+
+    return 0;
+}
+//gpt助写
