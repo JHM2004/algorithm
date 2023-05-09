@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+template <typename T>
+void insertion_sort(vector<T>& vec) {
+    int n = vec.size();
+    for (int i = 1; i < n; i++) {
+        T key = vec[i];
+        int j = i - 1;
+        while (j >= 0 && vec[j] > key) {
+            vec[j + 1] = vec[j];
+            j--;
+        }
+        vec[j + 1] = key;
+    }
+}
+
+int main() {
+    vector<int> vec = { 4, 2, 5, 1, 3 };
+    insertion_sort(vec);
+    for (int i : vec) {
+        cout << i << " ";
+    }
+    cout << endl;
+    return 0;
+}
+//gpt助写
