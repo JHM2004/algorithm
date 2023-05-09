@@ -1,0 +1,42 @@
+void treeSelectionSort(int arr[], int n) {
+    // 创建完全二叉树
+    int treeSize = 2 * n - 1;
+    int *tree = new int[treeSize];
+    for (int i = 0; i < n; i++) {
+        tree[n-1+i] = arr[i];
+    }
+
+    // 选择排序
+    while (treeSize > 1) {
+        // 标记最小节点
+        int minIndex = (tree[1] < tree[2]) ? 1 : 2;
+        for (int i = 2; i <= treeSize/2; i++) {
+            if (tree[i*2+1] < tree[i*2]) {
+                tree[i] = tree[i*2+1];
+                if (tree[i] < tree[minIndex]) {
+                    minIndex = i;
+                }
+            }
+            else {
+                tree[i] = tree[i*2];
+                if (tree[i] < tree[minIndex]) {
+                    minIndex = i;
+                }
+            }
+        }
+
+        // 将最小节点和根节点交换位置
+        swap(tree[1], tree[minIndex]);
+
+        // 移除最小节点
+        tree[minIndex] = tree[treeSize-1];
+        treeSize--;
+    }
+
+    // 将完全二叉树中剩下的最后一个节点赋值给arr[0]
+    arr[0] = tree[0];
+
+    // 释放动态分配的内存
+    delete []tree;
+}
+//gpt助写
