@@ -1,0 +1,22 @@
+template <typename T>
+void binaryInsertionSort(T arr[], int len) {
+    for (int i = 1; i < len; i++) {
+        // 寻找 arr[i] 插入的位置
+        int left = 0, right = i - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (arr[mid] > arr[i]) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        // 将 arr[i] 插入到正确的位置
+        T temp = arr[i];
+        for (int j = i - 1; j >= left; j--) {
+            arr[j + 1] = arr[j];
+        }
+        arr[left] = temp;
+    }
+}
+//gpt助写
