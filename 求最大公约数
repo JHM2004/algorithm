@@ -1,0 +1,19 @@
+#include<iostream>
+using namespace std;
+
+// 函数功能：求最大公约数
+// 参数说明：a、b为两个正整数
+// 返回值说明：a、b的最大公约数
+long long gcd(long long a, long long b){
+    if(b==0) return a;
+    else return gcd(b, a%b);
+}
+
+int main(){
+    long long n,m;
+    while(cin>>n>>m){
+        if(n==0 && m==0) break;
+        cout<<gcd(n,m)<<endl;
+    }
+    return 0;
+}
