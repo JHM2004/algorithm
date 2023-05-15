@@ -1,0 +1,23 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+using namespace std;
+
+int main() {
+    // 初始化字符串列表
+    vector<string> strList = {"apple", "banana", "cherry", "date", "eggplant"};
+
+    // 排序
+    sort(strList.begin(), strList.end());
+
+    // 输出结果
+    for (const auto& str : strList) {
+        cout << str << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+//gpt
+//(strcmp+冒泡)
