@@ -1,0 +1,68 @@
+单链表的原地反转，也称为单链表的逆序，是将链表中的每个节点的指针都反向指向前驱节点，从而将整个链表反向的一种操作。
+
+实现单链表的原地反转的一种常见方法是利用双指针遍历链表，每次将当前节点的 next 指针指向前驱节点，然后更新前驱节点和当前节点，继续遍历链表，直到遍历结束。
+
+以下是一个 C++ 的示例代码：
+
+```cpp
+#include <iostream>
+using namespace std;
+
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
+ListNode* reverseList(ListNode* head) {
+    ListNode* prev = NULL;
+    ListNode* curr = head;
+    while (curr != NULL) {
+        ListNode* nextNode = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = nextNode;
+    }
+    return prev;
+}
+
+int main() {
+    ListNode* head = new ListNode(1);
+    head->next = new ListNode(2);
+    head->next->next = new ListNode(3);
+    head->next->next->next = new ListNode(4);
+    head->next->next->next->next = new ListNode(5);
+
+    cout << "Original list: ";
+    ListNode* curr = head;
+    while (curr != NULL) {
+        cout << curr->val << " ";
+        curr = curr->next;
+    }
+    cout << endl;
+
+    ListNode* newHead = reverseList(head);
+
+    cout << "Reversed list: ";
+    curr = newHead;
+    while (curr != NULL) {
+        cout << curr->val << " ";
+        curr = curr->next;
+    }
+    cout << endl;
+
+    return 0;
+}
+```
+
+在上面的代码中，我们定义了一个单链表节点的结构体 `ListNode`，包含一个整数值和一个指向下一个节点的指针。然后定义了一个名为 `reverseList` 的函数，用于反转单链表。该函数输入一个单链表的头节点，遍历整个链表，将链表中的每个节点的指针都指向其前驱节点，最后返回反转后的链表头节点。函数实现过程中使用了两个指针变量 prev 和 curr，分别表示当前节点的前驱节点和当前节点本身。
+
+在主函数中，我们创建了一个长度为 5 的单链表，并分别输出了原链表和反转后的链表节点的值。
+
+输出结果如下：
+
+```
+Original list: 1 2 3 4 5 
+Reversed list: 5 4 3 2 1 
+```
+//gpt
