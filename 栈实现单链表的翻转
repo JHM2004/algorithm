@@ -1,1 +1,76 @@
-利用栈实现单链表的反转
+利用栈实现单链表的反转，可以先遍历链表，将每个元素入栈，然后将栈中的元素依次出栈，重新组成一个反向的链表。
+
+以下是一个 C++ 的示例代码：
+
+```cpp
+#include <iostream>
+#include <stack>
+using namespace std;
+
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
+ListNode* reverseList(ListNode* head) {
+    stack<ListNode*> stk;
+    ListNode* curr = head;
+    while (curr != NULL) {
+        stk.push(curr);
+        curr = curr->next;
+    }
+    if (!stk.empty()) {
+        head = stk.top();
+        stk.pop();
+        ListNode* curr = head;
+        while (!stk.empty()) {
+            curr->next = stk.top();
+            stk.pop();
+            curr = curr->next;
+        }
+        curr->next = NULL;
+    }
+    return head;
+}
+
+int main() {
+    ListNode* head = new ListNode(1);
+    head->next = new ListNode(2);
+    head->next->next = new ListNode(3);
+    head->next->next->next = new ListNode(4);
+    head->next->next->next->next = new ListNode(5);
+
+    cout << "Original list: ";
+    ListNode* curr = head;
+    while (curr != NULL) {
+        cout << curr->val << " ";
+        curr = curr->next;
+    }
+    cout << endl;
+
+    ListNode* newHead = reverseList(head);
+
+    cout << "Reversed list: ";
+    curr = newHead;
+    while (curr != NULL) {
+        cout << curr->val << " ";
+        curr = curr->next;
+    }
+    cout << endl;
+
+    return 0;
+}
+```
+
+在上面的代码中，我们定义了一个单链表节点的结构体 `ListNode`，包含一个整数值和一个指向下一个节点的指针。然后定义了一个名为 `reverseList` 的函数，用于反转单链表。该函数使用一个栈来辅助反转，首先遍历链表，将每个节点入栈，然后依次出栈，重新组成一个反向的链表，并返回反转后的链表头节点。
+
+在主函数中，我们创建了一个长度为 5 的单链表，并分别输出了原链表和反转后的链表节点的值。
+
+输出结果如下：
+
+```
+Original list: 1 2 3 4 5 
+Reversed list: 5 4 3 2 1 
+```
+//gpt
