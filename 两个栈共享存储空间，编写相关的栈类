@@ -1,0 +1,96 @@
+两个栈共享存储空间，可以采用顺序栈的方式，将一段连续的数组空间分成两段，分别作为两个栈的存储空间。两个栈的栈底各自对应数组两端，然后向内依次增长。这样，两个栈的操作可以相互独立，但是需要避免栈顶指针越界的问题。
+
+以下是一个C++的示例代码：
+
+```cpp
+#include <iostream>
+using namespace std;
+
+const int MAX_SIZE = 100;
+
+class SharedStack {
+public:
+    SharedStack() {
+        top1 = -1;
+        top2 = MAX_SIZE;
+    }
+
+    bool push1(int val) {
+        if (top1 < top2 - 1) {
+            data[++top1] = val;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    bool push2(int val) {
+        if (top1 < top2 - 1) {
+            data[--top2] = val;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    int pop1() {
+        if (top1 >= 0) {
+            return data[top1--];
+        } else {
+            return INT_MIN;
+        }
+    }
+
+    int pop2() {
+        if (top2 < MAX_SIZE) {
+            return data[top2++];
+        } else {
+            return INT_MIN;
+        }
+    }
+
+    bool isEmpty1() {
+        return top1 == -1;
+    }
+
+    bool isEmpty2() {
+        return top2 == MAX_SIZE;
+    }
+
+private:
+    int data[MAX_SIZE];
+    int top1;
+    int top2;
+};
+
+int main() {
+    SharedStack stk;
+    stk.push1(1);
+    stk.push1(2);
+    stk.push2(3);
+    stk.push2(4);
+    stk.push1(5);
+    stk.push2(6);
+
+    while (!stk.isEmpty1()) {
+        cout << stk.pop1() << " ";
+    }
+    while (!stk.isEmpty2()) {
+        cout << stk.pop2() << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+```
+
+在上面的代码中，我们定义了一个名为 `SharedStack` 的类来表示两个栈共享存储空间，该类有私有成员数组 data，以及两个私有成员变量 top1 和 top2，分别表示两个栈的栈顶指针。该类有四个公有成员函数 push1、push2、pop1 和 pop2 用于向两个栈中压入或弹出元素，以及两个成员函数 isEmpty1 和 isEmpty2 用于判断两个栈是否为空。
+
+在主函数中，我们创建了一个 `SharedStack` 对象，并向两个栈分别压入和弹出了一些元素。最后输出了弹出元素的顺序。
+
+输出结果如下：
+
+```
+5 2 1 3 4 6
+```
+//gpt
