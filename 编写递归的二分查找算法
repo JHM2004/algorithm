@@ -1,0 +1,37 @@
+#include<iostream>
+using namespace std;
+
+int BinarySearch(int a[], int left, int right, int target)
+{
+    if (left > right) { // 查找区间为空，未找到目标元素
+        return -1;
+    }
+
+    int mid = left + (right - left) / 2;
+    if (a[mid] == target) {
+        return mid;
+    }
+    else if (a[mid] < target) {
+        return BinarySearch(a, mid + 1, right, target);
+    }
+    else {
+        return BinarySearch(a, left, mid - 1, target);
+    }
+}
+
+int main()
+{
+    int a[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+    int n = sizeof(a) / sizeof(int);
+
+    int result = BinarySearch(a, 0, n - 1, 5);
+    if (result == -1) {
+        cout << "数组中没有找到目标元素" << endl;
+    }
+    else {
+        cout << "找到目标元素，下标为：" << result << endl;
+    }
+
+    return 0;
+}
+//gpt
