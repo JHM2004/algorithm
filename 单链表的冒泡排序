@@ -1,0 +1,82 @@
+#include<iostream>
+using namespace std;
+
+// 定义单链表节点
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
+// 定义链表的冒泡排序函数
+ListNode* BubbleSort(ListNode* head) {
+    if (head == NULL || head->next == NULL) {
+        return head; //空链表或只有一个节点的链表不需要排序
+    }
+    ListNode* tail = NULL; // 链表排序后的尾节点
+    bool flag = false; // 标志位，表示本次循环中是否有节点交换位置
+    while (!flag) {
+        flag = true;
+        ListNode* preNode = NULL; //上一个节点
+        ListNode* curNode = head; //当前节点
+        while (curNode->next != tail) {
+            if (curNode->val > curNode->next->val) {
+                flag = false; //有节点交换
+                //交换位置
+                ListNode* temp = curNode->next;
+                curNode->next = temp->next;
+                temp->next = curNode;
+                if (curNode == head) {
+                    head = temp; //头节点变换
+                }
+                if (preNode != NULL) {
+                    preNode->next = temp;
+                }
+                preNode = temp;
+            }
+            else {
+                preNode = curNode;
+                curNode = curNode->next;
+            }
+        }
+        tail = curNode; //每次循环的最后一个节点是已排序区间的尾节点
+    }
+    return head;
+}
+
+// 测试
+int main() {
+    // 生成测试用例链表
+    ListNode* node1 = new ListNode(5);
+    ListNode* node2 = new ListNode(2);
+    ListNode* node3 = new ListNode(4);
+    ListNode* node4 = new ListNode(1);
+    ListNode* node5 = new ListNode(3);
+
+    node1->next = node2;
+    node2->next = node3;
+    node3->next = node4;
+    node4->next = node5;
+
+    cout << "原链表：";
+    ListNode* p = node1;
+    while (p != NULL) {
+        cout << p->val << " ";
+        p = p->next;
+    }
+    cout << endl;
+
+    // 冒泡排序
+    ListNode* newHead = BubbleSort(node1);
+
+    cout << "排序后链表：";
+    p = newHead;
+    while (p != NULL) {
+        cout << p->val << " ";
+        p = p->next;
+    }
+    cout << endl;
+
+    return 0;
+}
+//gpt
